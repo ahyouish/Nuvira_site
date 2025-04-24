@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nuvira - Customize Your Specs</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Nuvira</h1>
+    <p>Customize Your Spectacles</p>
+  </header>
+
+  <main>
+    <form id="customForm">
+      <section>
+        <h2>Select Frame Shape</h2>
+        <div class="options">
+          <label>
+            <input type="radio" name="shape" value="Round" required />
+            <span>Round</span>
+          </label>
+          <label>
+            <input type="radio" name="shape" value="Square" />
+            <span>Square</span>
+          </label>
+          <label>
+            <input type="radio" name="shape" value="Cat Eye" />
+            <span>Cat Eye</span>
+          </label>
+          <label>
+            <input type="radio" name="shape" value="Other" />
+            <input type="text" id="customShape" name="customShape" placeholder="Enter custom shape" />
+          </label>
+        </div>
+      </section>
+
+      <section>
+        <h2>Select Lens Type</h2>
+        <select name="lens" required>
+          <option value="">--Select--</option>
+          <option value="Single Vision">Single Vision</option>
+          <option value="Bifocal">Bifocal</option>
+          <option value="Progressive">Progressive</option>
+          <option value="Other">Other (enter below)</option>
+        </select>
+        <input type="text" id="customLens" name="customLens" placeholder="Enter custom lens type" />
+      </section>
+
+      <section>
+        <h2>Select Frame Color</h2>
+        <select name="color" required>
+          <option value="">--Select--</option>
+          <option value="Black">Black</option>
+          <option value="Silver">Silver</option>
+          <option value="Gold">Gold</option>
+          <option value="Transparent">Transparent</option>
+          <option value="Other">Other (enter below)</option>
+        </select>
+        <div class="color-input">
+          <input type="text" id="customColor" name="customColor" placeholder="Enter color name or hex code" />
+          <span id="colorPreview" class="color-box"></span>
+        </div>
+      </section>
+
+      <section>
+        <h2>Enter Your Eye Power</h2>
+        <input type="text" name="power" placeholder="e.g., -1.25 / +2.00" required />
+      </section>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <section id="result" class="hidden">
+      <h2>Your Customization</h2>
+      <p id="output"></p>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById('customForm');
+    const output = document.getElementById('output');
+    const result = document.getElementById('result');
+    const colorInput = document.getElementById('customColor');
+    const colorPreview = document.getElementById('colorPreview');
+
+    colorInput.addEventListener('input', () => {
+      colorPreview.style.backgroundColor = colorInput.value;
+    });
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      let shape = form.elements['shape'].value;
+      if (shape === 'Other') shape = document.getElementById('customShape').value;
+
+      let lens = form.elements['lens'].value;
+      if (lens === 'Other') lens = document.getElementById('customLens').value;
+
+      let color = form.elements['color'].value;
+      if (color === 'Other') color = document.getElementById('customColor').value;
+
+      const power = form.elements['power'].value;
+
+      output.innerHTML = `You selected:<br>
+        <strong>Shape:</strong> ${shape}<br>
+        <strong>Lens:</strong> ${lens}<br>
+        <strong>Color:</strong> <span style="display:inline-block;width:16px;height:16px;background:${color};border:1px solid #000;margin-right:5px;"></span>${color}<br>
+        <strong>Eye Power:</strong> ${power}`;
+
+      result.classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>
